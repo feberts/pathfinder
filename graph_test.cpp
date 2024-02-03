@@ -1,4 +1,4 @@
-// g++ -std=c++17 graph_test.cpp graph.cpp -o graph_test
+// g++ -std=c++17 graph_test.cpp graph.cpp
 
 #include "graph.h"
 #include <ctime>
@@ -8,14 +8,14 @@ using namespace std;
 using namespace graph;
 
 void demo();
-void graph_test_cases();
-void graph_performance();
+void test_cases();
+void performance();
 
 int main()
 {
     // demo();
-    graph_test_cases();
-    // graph_performance();
+    test_cases();
+    performance();
 
     return 0;
 }
@@ -96,7 +96,7 @@ void dijkstra_test(Graph & graph,
     }
 }
 
-void graph_test_cases()
+void test_cases()
 {
     cout << "dijkstra test start\n";
 
@@ -515,7 +515,7 @@ void graph_test_cases()
     cout << "dijkstra test end\n";
 }
 
-void graph_performance()
+void performance()
 {
     // creating a grid-shaped graph
     // pathfinding between opposite corners
@@ -581,7 +581,7 @@ void graph_performance()
     time = clock();
 
     // for(int n = 0; n < 1000; ++n)
-        graph.path(src, dest);
+    graph.path(src, dest);
 
     time = clock() - time;
     cout << "Time Dijkstra: " << (float)time / CLOCKS_PER_SEC << endl;

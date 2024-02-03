@@ -53,8 +53,7 @@ struct graph::internal::Directed_edge
 
 /*
 class Graph tested with
- - undirected graphs
- - directed graphs
+ - directed and undirected graphs
  - connected and disconnected graphs
  - paths with the same start and destination node
  - paths with unreachable destination nodes

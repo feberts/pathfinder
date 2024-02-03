@@ -1,6 +1,7 @@
 #include "graph.h"
 
-// #define NDEBUG // uncomment to disable asserts
+#define NDEBUG // uncomment to disable asserts
+// TODO
 
 #include <cassert>
 #include <iostream>
@@ -71,7 +72,7 @@ Path Graph::path(const Node_id src, const Node_id dest)
     m_path_length = node->distance;
     m_path = {};
 
-    if(node->previous || node->id == m_nodes.at(src).id) // a path was found
+    if(node->previous || src == dest)
     {
         m_path.push(node->id);
 
@@ -137,7 +138,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
 
             if(m_ignored_nodes.count(neighbour->id) && neighbour->id != dest)
             {
-                // ignore this node unless it is the destination node;
+                // ignore this node (but not the destination node);
                 // this is an additional feature and not required for path finding
                 continue;
             }
@@ -171,7 +172,10 @@ void Graph::print_path() const
 
     cout << "Shortest path:\n";
 
-    if(path.empty()) cout << "no path was found\n";
+    if(path.empty())
+    {
+        cout << "no path was found\n";
+    }
 
     while(!path.empty())
     {
