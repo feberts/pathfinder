@@ -151,6 +151,16 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
     }
 }
 
+void Graph::ignore_nodes(const Node_ids & ids)
+{
+#ifndef NDEBUG
+    for(const Node_id & id : ids)
+        assert(m_nodes.count(id) && "node does not exist");
+#endif
+
+    m_ignored_nodes = ids;
+}
+
 void Graph::mark_ignored_nodes(const Node_id except)
 {
     for(const Node_id id : m_ignored_nodes)
@@ -161,14 +171,9 @@ void Graph::mark_ignored_nodes(const Node_id except)
     m_nodes.at(except).explored = false; // do not ignore this node
 }
 
-void Graph::ignore_nodes(const Node_ids & ids)
+Distance Graph::path_length() const
 {
-#ifndef NDEBUG
-    for(const Node_id & id : ids)
-        assert(m_nodes.count(id) && "node does not exist");
-#endif
-
-    m_ignored_nodes = ids;
+    return m_path_length;
 }
 
 void Graph::print_path() const
@@ -202,9 +207,4 @@ void Graph::print_path_verbose() const
             << ", dist = " << ((node.distance != DISTANCE_MAX) ? to_string(node.distance) : "INF")
             << endl;
     }
-}
-
-Distance Graph::path_length() const
-{
-    return m_path_length;
 }

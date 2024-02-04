@@ -1,11 +1,8 @@
-// g++ -std=c++17 graph_test.cpp graph.cpp
+// g++ -std=c++17
 
 #include "graph.h"
 #include <ctime>
 #include <iostream>
-
-using namespace std;
-using namespace graph;
 
 void demo();
 void test_cases();
@@ -39,20 +36,30 @@ void demo()
     graph.add_edge(4, 5, 6);
     graph.add_edge(5, 6, 9);
 
-    graph.print_adjacency_list();
+    graph::Path path = graph.path(1, 5); // empty stack, if no path was found
 
-    graph::Path path = graph.path(1, 5);
-    Node_id next = path.top();
-    path.pop();
+    std::cout << "Path: ";
+
+    while(!path.empty())
+    {
+        std::cout << path.top() << " ";
+        path.pop();
+    }
+
+    std::cout << "\nLength: " << graph.path_length() << std::endl;
 
     graph.print_path();
     graph.print_path_verbose();
-    cout << "Path length: " << graph.path_length() << endl;
+    graph.print_adjacency_list();
 
-    graph.ignore_nodes({3, 6});
-    graph.ignore_nodes({});
-    graph.add_directed_edge(5, 6, 13);
+    graph.ignore_nodes({3, 6}); // exclude nodes from path search
+    graph.ignore_nodes({}); // allow all nodes again
+
+    graph.add_directed_edge(2, 5, 8);
 }
+
+using namespace std;
+using namespace graph;
 
 void fail(const string & msg, const int line)
 {
@@ -65,7 +72,7 @@ void dijkstra_test(Graph & graph,
                    const Node_id src, const Node_id dest,
                    const vector<Node_id> & expected_path,
                    const Distance expected_length,
-                   const int line = -1)
+                   const int line)
 {
     Path path = graph.path(src, dest);
 
@@ -517,8 +524,7 @@ void test_cases()
 
 void performance()
 {
-    // creating a grid-shaped graph
-    // pathfinding between opposite corners
+    // creating a grid-shaped graph, then performing a path search between opposite corners
 
     const int COLS = 1000;
     const int ROWS = 1000;
