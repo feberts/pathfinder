@@ -1,7 +1,6 @@
 #include "graph.h"
 
-#define NDEBUG // uncomment to disable asserts
-// TODO
+// #define NDEBUG // uncomment to disable asserts
 
 #include <cassert>
 #include <iostream>
@@ -113,6 +112,9 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
         node.explored = false;
     }
 
+    mark_ignored_nodes(dest); // ignore some nodes, but not the destination node
+    // (this is an additional feature and not required for path finding)
+
     Node_priority_queue frontier;
 
     Node * node = &m_nodes.at(src);
@@ -136,13 +138,6 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
 
             if(neighbour->explored) { continue; } // alternatively use if-statement above (*)
 
-            if(m_ignored_nodes.count(neighbour->id) && neighbour->id != dest)
-            {
-                // ignore this node (but not the destination node);
-                // this is an additional feature and not required for path finding
-                continue;
-            }
-
             const Distance new_distance = node->distance + edge.weight;
 
             if(new_distance < neighbour->distance)
@@ -154,6 +149,16 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
             }
         }
     }
+}
+
+void Graph::mark_ignored_nodes(const Node_id except)
+{
+    for(const Node_id id : m_ignored_nodes)
+    {
+        m_nodes.at(id).explored = true;
+    }
+
+    m_nodes.at(except).explored = false; // do not ignore this node
 }
 
 void Graph::ignore_nodes(const Node_ids & ids)
