@@ -4,7 +4,6 @@
 #include <climits>
 #include <stack>
 #include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
 namespace graph
@@ -19,7 +18,7 @@ namespace graph
 
     typedef int Node_id;
     typedef std::stack<Node_id> Path;
-    typedef std::unordered_set<Node_id> Node_ids;
+    typedef std::vector<Node_id> Node_ids;
 
     typedef int Weight;
     typedef Weight Distance;
