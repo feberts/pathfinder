@@ -176,29 +176,9 @@ Distance Graph::path_length() const
     return m_path_length;
 }
 
-void Graph::print_path() const
+void Graph::print_nodes() const
 {
-    Path path = m_path;
-
-    cout << "Shortest path:\n";
-
-    if(path.empty())
-    {
-        cout << "no path was found\n";
-    }
-
-    while(!path.empty())
-    {
-        cout << path.top() << " -> ";
-        path.pop();
-    }
-
-    cout << "\b\b\b  \n";
-}
-
-void Graph::print_path_verbose() const
-{
-    cout << "Shortest path (verbose):\n";
+    cout << "Nodes:\n";
 
     for(const auto & [id, node] : m_nodes)
     {

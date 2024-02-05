@@ -36,6 +36,8 @@ void demo()
     graph.add_edge(4, 5, 6);
     graph.add_edge(5, 6, 9);
 
+    graph.print_adjacency_list();
+
     graph::Path path = graph.path(1, 5); // empty stack, if no path was found
 
     std::cout << "Path: ";
@@ -48,9 +50,7 @@ void demo()
 
     std::cout << "\nLength: " << graph.path_length() << std::endl;
 
-    graph.print_path();
-    graph.print_path_verbose();
-    graph.print_adjacency_list();
+    graph.print_nodes();
 
     graph.ignore_nodes({3, 6}); // exclude nodes from path search
     graph.ignore_nodes({}); // allow all nodes again

@@ -76,8 +76,7 @@ public: // Dijkstra
     Path path(const Node_id src, const Node_id dest);
     Distance path_length() const;
     void ignore_nodes(const Node_ids & ids);
-    void print_path() const;
-    void print_path_verbose() const;
+    void print_nodes() const;
 
 private: // Dijkstra
 
