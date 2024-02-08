@@ -69,20 +69,20 @@ Path Graph::path(const Node_id src, const Node_id dest)
 
     const Node * node = &m_nodes.at(dest);
     m_path_length = node->distance;
-    m_path = {};
+    Path path;
 
     if(node->previous || src == dest)
     {
-        m_path.push(node->id);
+        path.push(node->id);
 
         while(node->previous)
         {
             node = node->previous;
-            m_path.push(node->id);
+            path.push(node->id);
         }
     }
 
-    return m_path;
+    return path;
 }
 
 struct Node_compare

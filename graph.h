@@ -83,7 +83,6 @@ private: // Dijkstra
     void dijkstra(const Node_id src, const Node_id dest);
     void mark_ignored_nodes(const Node_id except);
 
-    Path m_path;
     Distance m_path_length = DISTANCE_MAX;
     Node_ids m_ignored_nodes;
 };
