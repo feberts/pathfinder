@@ -1,7 +1,4 @@
 #include "graph.h"
-
-// #define NDEBUG // uncomment to disable asserts
-
 #include <cassert>
 #include <iostream>
 #include <queue>
