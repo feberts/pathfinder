@@ -148,7 +148,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
     }
 }
 
-void Graph::ignore_nodes(const Node_ids & ids)
+void Graph::block_nodes(const Node_ids & ids)
 {
 #ifndef NDEBUG
     for(const Node_id & id : ids)

@@ -52,8 +52,8 @@ void demo()
 
     graph.print_nodes();
 
-    graph.ignore_nodes({3, 6}); // exclude nodes from path search
-    graph.ignore_nodes({}); // allow all nodes again
+    graph.block_nodes({3, 6}); // exclude nodes from path search
+    graph.block_nodes({}); // allow all nodes again
 
     graph.add_directed_edge(2, 5, 8);
 }
@@ -259,16 +259,16 @@ void test_cases()
         graph.add_edge(5, 6, 9);
         DIJKSTRA_TEST(graph, 1, 5, {1, 3, 6, 5}, 20);
 
-        graph.ignore_nodes({3});
+        graph.block_nodes({3});
         DIJKSTRA_TEST(graph, 1, 5, {1, 6, 5}, 23);
 
-        graph.ignore_nodes({3, 6});
+        graph.block_nodes({3, 6});
         DIJKSTRA_TEST(graph, 1, 5, {1, 2, 4, 5}, 28);
 
-        graph.ignore_nodes({6});
+        graph.block_nodes({6});
         DIJKSTRA_TEST(graph, 1, 5, {1, 3, 4, 5}, 26);
 
-        graph.ignore_nodes({});
+        graph.block_nodes({});
         DIJKSTRA_TEST(graph, 1, 5, {1, 3, 6, 5}, 20);
     }
 
@@ -285,22 +285,22 @@ void test_cases()
         graph.add_edge(3, 4, 1);
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 3);
 
-        graph.ignore_nodes({2});
+        graph.block_nodes({2});
         DIJKSTRA_TEST(graph, 1, 4, {}, graph::DISTANCE_MAX);
 
-        graph.ignore_nodes({1});
+        graph.block_nodes({1});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 3);
 
-        graph.ignore_nodes({4});
+        graph.block_nodes({4});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 3);
 
-        graph.ignore_nodes({1, 4});
+        graph.block_nodes({1, 4});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 3);
 
-        graph.ignore_nodes({2, 3});
+        graph.block_nodes({2, 3});
         DIJKSTRA_TEST(graph, 2, 3, {2, 3}, 1);
 
-        graph.ignore_nodes({1, 2, 3, 4});
+        graph.block_nodes({1, 2, 3, 4});
         DIJKSTRA_TEST(graph, 2, 2, {2}, 0);
     }
 
@@ -323,15 +323,15 @@ void test_cases()
         graph.add_edge(5, 6, 9);
         DIJKSTRA_TEST(graph, 1, 5, {1, 3, 6, 5}, 20);
 
-        graph.ignore_nodes({3});
+        graph.block_nodes({3});
         DIJKSTRA_TEST(graph, 1, 5, {1, 6, 5}, 23);
         DIJKSTRA_TEST(graph, 5, 1, {5, 6, 1}, 23);
 
-        graph.ignore_nodes({3, 6});
+        graph.block_nodes({3, 6});
         DIJKSTRA_TEST(graph, 1, 5, {1, 2, 4, 5}, 28);
         DIJKSTRA_TEST(graph, 5, 1, {5, 4, 2, 1}, 28);
 
-        graph.ignore_nodes({3, 4, 6});
+        graph.block_nodes({3, 4, 6});
         DIJKSTRA_TEST(graph, 1, 5, {}, DISTANCE_MAX);
         DIJKSTRA_TEST(graph, 5, 1, {}, DISTANCE_MAX);
     }
@@ -350,25 +350,25 @@ void test_cases()
 
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 13);
 
-        graph.ignore_nodes({1});
+        graph.block_nodes({1});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 13);
 
-        graph.ignore_nodes({4});
+        graph.block_nodes({4});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 13);
 
-        graph.ignore_nodes({1, 4});
+        graph.block_nodes({1, 4});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 13);
 
-        graph.ignore_nodes({2});
+        graph.block_nodes({2});
         DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
 
-        graph.ignore_nodes({3});
+        graph.block_nodes({3});
         DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
 
-        graph.ignore_nodes({2, 3});
+        graph.block_nodes({2, 3});
         DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
 
-        graph.ignore_nodes({3, 4});
+        graph.block_nodes({3, 4});
         DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
     }
 
@@ -429,7 +429,7 @@ void test_cases()
         graph.add_directed_edge(4, 7, 2);
         DIJKSTRA_TEST(graph, 1, 7, {1, 2, 4, 7}, 7);
 
-        graph.ignore_nodes({2});
+        graph.block_nodes({2});
         DIJKSTRA_TEST(graph, 1, 7, {1, 5, 6, 4, 7}, 8);
     }
 
