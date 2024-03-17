@@ -53,7 +53,7 @@ void demo()
     graph.print_nodes();
 
     graph.block_nodes({3, 6}); // exclude nodes from path search
-    graph.block_nodes({}); // allow all nodes again
+    graph.block_nodes(); // allow all nodes again
 
     graph.add_directed_edge(2, 5, 8);
 }
@@ -268,7 +268,7 @@ void test_cases()
         graph.block_nodes({6});
         DIJKSTRA_TEST(graph, 1, 5, {1, 3, 4, 5}, 26);
 
-        graph.block_nodes({});
+        graph.block_nodes();
         DIJKSTRA_TEST(graph, 1, 5, {1, 3, 6, 5}, 20);
     }
 
