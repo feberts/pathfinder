@@ -109,7 +109,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
         node.explored = false;
     }
 
-    mark_ignored_nodes(dest); // ignore some nodes, but not the destination node
+    mark_blocked_nodes(dest); // exclude nodes from path search, but not the destination node
     // (this is an additional feature and not required for path finding)
 
     Node_priority_queue frontier;
@@ -155,17 +155,17 @@ void Graph::block_nodes(const Node_ids & ids)
         assert(m_nodes.count(id) && "node does not exist");
 #endif
 
-    m_ignored_nodes = ids;
+    m_blocked_nodes = ids;
 }
 
-void Graph::mark_ignored_nodes(const Node_id except)
+void Graph::mark_blocked_nodes(const Node_id except)
 {
-    for(const Node_id id : m_ignored_nodes)
+    for(const Node_id id : m_blocked_nodes)
     {
         m_nodes.at(id).explored = true;
     }
 
-    m_nodes.at(except).explored = false; // do not ignore this node
+    m_nodes.at(except).explored = false; // do not block this node
 }
 
 Distance Graph::path_length() const
