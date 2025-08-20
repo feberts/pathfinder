@@ -81,7 +81,7 @@ public: // Dijkstra
 private: // Dijkstra
 
     void dijkstra(const Node_id src, const Node_id dest);
-    void mark_blocked_nodes(const Node_id except);
+    void mark_blocked_nodes(const Node_id src, const Node_id dest);
 
     Distance m_path_length = DISTANCE_MAX;
     Node_ids m_blocked_nodes;

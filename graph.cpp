@@ -109,7 +109,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
         node.explored = false;
     }
 
-    mark_blocked_nodes(dest); // exclude nodes from path search, but not the destination node
+    mark_blocked_nodes(src, dest); // exclude nodes from path search, but not the destination node
     // (this is an additional feature and not required for path finding)
 
     Node_priority_queue frontier;
@@ -120,11 +120,11 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
 
     while(!frontier.empty())
     {
-        node = frontier.top();
+        node = frontier.top(); // pick node with smallest distance
         frontier.pop();
 
-        // if(node->explored) { continue; } // (*)
-        if(node->id == dest) { return; }
+        if(node->explored) continue;
+        if(node->id == dest) return;
 
         node->explored = true;
 
@@ -133,7 +133,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
         {
             Node * const neighbour = edge.destination;
 
-            if(neighbour->explored) { continue; } // alternatively use if-statement above (*)
+            if(neighbour->explored) continue;
 
             const Distance new_distance = node->distance + edge.weight;
 
@@ -158,14 +158,15 @@ void Graph::block_nodes(const Node_ids & ids)
     m_blocked_nodes = ids;
 }
 
-void Graph::mark_blocked_nodes(const Node_id except)
+void Graph::mark_blocked_nodes(const Node_id src, const Node_id dest)
 {
     for(const Node_id id : m_blocked_nodes)
     {
         m_nodes.at(id).explored = true;
     }
 
-    m_nodes.at(except).explored = false; // do not block this node
+    m_nodes.at(src).explored = false; // do not block this node
+    m_nodes.at(dest).explored = false; // do not block this node
 }
 
 Distance Graph::path_length() const
