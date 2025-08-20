@@ -187,14 +187,14 @@ void test_cases()
 
         graph.add_node(2);
         DIJKSTRA_TEST(graph, 2, 2, {2}, 0);
-        DIJKSTRA_TEST(graph, 1, 2, {}, graph::DISTANCE_MAX);
-        DIJKSTRA_TEST(graph, 2, 1, {}, graph::DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 2, {}, distance_max);
+        DIJKSTRA_TEST(graph, 2, 1, {}, distance_max);
 
         graph.add_edge(1, 2, 7);
         DIJKSTRA_TEST(graph, 1, 2, {1, 2}, 7);
 
         graph.add_node(3);
-        DIJKSTRA_TEST(graph, 1, 3, {}, graph::DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 3, {}, distance_max);
     }
 
     {
@@ -243,7 +243,7 @@ void test_cases()
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 3);
 
         graph.block_nodes({2});
-        DIJKSTRA_TEST(graph, 1, 4, {}, graph::DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 4, {}, distance_max);
 
         graph.block_nodes({1});
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 3);
@@ -289,8 +289,8 @@ void test_cases()
         DIJKSTRA_TEST(graph, 5, 1, {5, 4, 2, 1}, 28);
 
         graph.block_nodes({3, 4, 6});
-        DIJKSTRA_TEST(graph, 1, 5, {}, DISTANCE_MAX);
-        DIJKSTRA_TEST(graph, 5, 1, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 5, {}, distance_max);
+        DIJKSTRA_TEST(graph, 5, 1, {}, distance_max);
     }
 
     {
@@ -317,16 +317,16 @@ void test_cases()
         DIJKSTRA_TEST(graph, 1, 4, {1, 2, 3, 4}, 13);
 
         graph.block_nodes({2});
-        DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 4, {}, distance_max);
 
         graph.block_nodes({3});
-        DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 4, {}, distance_max);
 
         graph.block_nodes({2, 3});
-        DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 4, {}, distance_max);
 
         graph.block_nodes({3, 4});
-        DIJKSTRA_TEST(graph, 1, 4, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 4, {}, distance_max);
     }
 
     {
@@ -335,11 +335,11 @@ void test_cases()
         graph.add_node(1);
         graph.add_node(2);
         graph.add_directed_edge(2, 1, 5);
-        DIJKSTRA_TEST(graph, 1, 2, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 2, {}, distance_max);
 
         graph.add_node(3);
         graph.add_directed_edge(3, 2, 3);
-        DIJKSTRA_TEST(graph, 1, 3, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 3, {}, distance_max);
         DIJKSTRA_TEST(graph, 3, 1, {3, 2, 1}, 8);
 
         graph.add_directed_edge(1, 3, 4);
@@ -378,10 +378,10 @@ void test_cases()
         DIJKSTRA_TEST(graph, 1, 3, {1, 2, 4, 3}, 7);
 
         graph.add_node(7);
-        DIJKSTRA_TEST(graph, 1, 7, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 7, {}, distance_max);
 
         graph.add_directed_edge(7, 1, 2);
-        DIJKSTRA_TEST(graph, 1, 7, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 7, {}, distance_max);
 
         graph.add_directed_edge(4, 7, 2);
         DIJKSTRA_TEST(graph, 1, 7, {1, 2, 4, 7}, 7);
@@ -403,8 +403,8 @@ void test_cases()
 
         DIJKSTRA_TEST(graph, 1, 2, {1, 2}, 3);
         DIJKSTRA_TEST(graph, 3, 4, {3, 4}, 3);
-        DIJKSTRA_TEST(graph, 1, 3, {}, DISTANCE_MAX);
-        DIJKSTRA_TEST(graph, 4, 2, {}, DISTANCE_MAX);
+        DIJKSTRA_TEST(graph, 1, 3, {}, distance_max);
+        DIJKSTRA_TEST(graph, 4, 2, {}, distance_max);
 
         graph.add_edge(2, 3, 5);
         DIJKSTRA_TEST(graph, 1, 3, {1, 2, 3}, 8);

@@ -22,7 +22,7 @@ namespace graph
 
     typedef int Weight;
     typedef Weight Distance;
-    const Distance DISTANCE_MAX = std::numeric_limits<Distance>::max();
+    const Distance distance_max = std::numeric_limits<Distance>::max();
 }
 
 struct graph::internal::Node
@@ -32,7 +32,7 @@ struct graph::internal::Node
 
     Node() = delete;
     Node(const Node_id id)
-        : id(id), distance(DISTANCE_MAX), previous(nullptr), explored(false) { }
+        : id(id), distance(distance_max), previous(nullptr), explored(false) { }
 
     // Dijkstra:
 
@@ -83,7 +83,7 @@ private: // Dijkstra
     void dijkstra(const Node_id src, const Node_id dest);
     void mark_blocked_nodes(const Node_id src, const Node_id dest);
 
-    Distance m_path_length = DISTANCE_MAX;
+    Distance m_path_length = distance_max;
     Node_ids m_blocked_nodes;
 };
 

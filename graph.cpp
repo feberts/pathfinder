@@ -23,6 +23,7 @@ void Graph::add_node(const Node_id id)
 void Graph::add_edge(const Node_id first, const Node_id second, const Weight weight)
 {
     assert(weight >= 0 && "no negative weights allowed");
+    assert(weight < distance_max && "weight must not be max value");
     assert(m_nodes.count(first) && "start node does not exist");
     assert(m_nodes.count(second) && "destination node does not exist");
 
@@ -33,6 +34,7 @@ void Graph::add_edge(const Node_id first, const Node_id second, const Weight wei
 void Graph::add_directed_edge(const Node_id src, const Node_id dest, const Weight weight)
 {
     assert(weight >= 0 && "no negative weights allowed");
+    assert(weight < distance_max && "weight must not be max value");
     assert(m_nodes.count(src) && "start node does not exist");
     assert(m_nodes.count(dest) && "destination node does not exist");
 
@@ -104,7 +106,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
 
     for(auto & [id, node] : m_nodes)
     {
-        node.distance = DISTANCE_MAX;
+        node.distance = distance_max;
         node.previous = nullptr;
         node.explored = false;
     }
@@ -182,7 +184,7 @@ void Graph::print_nodes() const
     {
         cout << id
             << " : prev = " << (node.previous ? to_string(node.previous->id) : "NULL")
-            << ", dist = " << ((node.distance != DISTANCE_MAX) ? to_string(node.distance) : "INF")
+            << ", dist = " << ((node.distance != distance_max) ? to_string(node.distance) : "INF")
             << endl;
     }
 }
