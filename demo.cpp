@@ -1,4 +1,4 @@
-// g++ -std=c++17
+// std >= c++17
 
 #include "graph.h"
 #include <iostream>
@@ -22,9 +22,12 @@ int main()
     graph.add_edge(4, 5, 6);
     graph.add_edge(5, 6, 9);
 
-    graph.print_adjacency_list();
+    graph::Path path = graph.path(1, 5);
 
-    graph::Path path = graph.path(1, 5); // empty stack, if no path was found
+    if(path.empty())
+    {
+        std::cout << "no path could be found\n";
+    }
 
     std::cout << "Path: ";
 
@@ -36,12 +39,12 @@ int main()
 
     std::cout << "\nLength: " << graph.path_length() << std::endl;
 
-    graph.print_nodes();
+    // nodes can be temporarily excluded from pathfinding:
+    // (nodes not in the argument list will be unblocked if they were previously blocked)
+    graph.block_nodes({3, 6});
+    graph.block_nodes(); // unblock all nodes
 
-    graph.block_nodes({3, 6}); // exclude nodes from path search
-    graph.block_nodes(); // allow all nodes again
+    graph.add_directed_edge(2, 5, 8); // add directed edge
 
-    graph.add_directed_edge(2, 5, 8);
-    
     return 0;
 }

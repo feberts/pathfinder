@@ -30,12 +30,10 @@ struct graph::internal::Node
     const Node_id id;
     std::vector<Directed_edge> departing_edges;
 
+    Node(const Node_id id) : id(id), distance(distance_max), previous(nullptr), explored(false) { }
     Node() = delete;
-    Node(const Node_id id)
-        : id(id), distance(distance_max), previous(nullptr), explored(false) { }
 
-    // Dijkstra:
-
+    // pathfinding:
     Distance distance;
     Node * previous;
     bool explored;
@@ -46,12 +44,12 @@ struct graph::internal::Directed_edge
     Node * const destination;
     const Weight weight;
 
-    Directed_edge() = delete;
     Directed_edge(Node * const dest, const Weight weight);
+    Directed_edge() = delete;
 };
 
 /*
-class Graph tested with
+class Graph has been tested with
  - directed and undirected graphs
  - connected and disconnected graphs
  - paths with the same start and destination node
@@ -60,25 +58,23 @@ class Graph tested with
 */
 class graph::Graph
 {
-public: // Graph
+public:
 
     void add_node(const Node_id id);
     void add_edge(const Node_id first, const Node_id second, const Weight weight = 1);
     void add_directed_edge(const Node_id src, const Node_id dest, const Weight weight = 1);
-    void print_adjacency_list() const;
 
-private: // Graph
+private:
 
     std::unordered_map<Node_id, internal::Node> m_nodes;
 
-public: // Dijkstra
+public: // pathfinding
 
     Path path(const Node_id src, const Node_id dest);
     Distance path_length() const;
     void block_nodes(const Node_ids & ids = {});
-    void print_nodes() const;
 
-private: // Dijkstra
+private: // pathfinding
 
     void dijkstra(const Node_id src, const Node_id dest);
     void mark_blocked_nodes(const Node_id src, const Node_id dest);

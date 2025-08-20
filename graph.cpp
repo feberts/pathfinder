@@ -1,6 +1,5 @@
 #include "graph.h"
 #include <cassert>
-#include <iostream>
 #include <queue>
 
 using namespace std;
@@ -40,23 +39,6 @@ void Graph::add_directed_edge(const Node_id src, const Node_id dest, const Weigh
 
     const Directed_edge edge(&m_nodes.at(dest), weight);
     m_nodes.at(src).departing_edges.push_back(edge);
-}
-
-void Graph::print_adjacency_list() const
-{
-    cout << "Adjacency list:\n";
-
-    for(const auto & [id, node] : m_nodes)
-    {
-        cout << id << " -> ";
-
-        for(const auto & edge : node.departing_edges)
-        {
-            cout << edge.destination->id << " (" << edge.weight << "), ";
-        }
-
-        cout << "\b\b \n";
-    }
 }
 
 Path Graph::path(const Node_id src, const Node_id dest)
@@ -111,32 +93,26 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
         node.explored = false;
     }
 
-    mark_blocked_nodes(src, dest); // exclude nodes from path search, but not the destination node
-    // (this is an additional feature and not required for path finding)
+    mark_blocked_nodes(src, dest);
 
     Node_priority_queue frontier;
-
     Node * node = &m_nodes.at(src);
     node->distance = 0;
     frontier.push(node);
 
     while(!frontier.empty())
     {
-        node = frontier.top(); // pick node with smallest distance
+        node = frontier.top();
         frontier.pop();
-
         if(node->explored) continue;
         if(node->id == dest) return;
-
         node->explored = true;
 
         // consider all unvisited neighbours of the current node:
         for(const auto & edge : node->departing_edges)
         {
             Node * const neighbour = edge.destination;
-
             if(neighbour->explored) continue;
-
             const Distance new_distance = node->distance + edge.weight;
 
             if(new_distance < neighbour->distance)
@@ -153,13 +129,14 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
 void Graph::block_nodes(const Node_ids & ids)
 {
 #ifndef NDEBUG
-    for(const Node_id & id : ids)
-        assert(m_nodes.count(id) && "node does not exist");
+    for(const Node_id & id : ids) assert(m_nodes.count(id) && "node does not exist");
 #endif
 
     m_blocked_nodes = ids;
 }
 
+// exclude nodes from pathfinding
+// (this is an additional feature and not required for pathfinding)
 void Graph::mark_blocked_nodes(const Node_id src, const Node_id dest)
 {
     for(const Node_id id : m_blocked_nodes)
@@ -167,24 +144,12 @@ void Graph::mark_blocked_nodes(const Node_id src, const Node_id dest)
         m_nodes.at(id).explored = true;
     }
 
-    m_nodes.at(src).explored = false; // do not block this node
-    m_nodes.at(dest).explored = false; // do not block this node
+    // do not exclude source and destination nodes:
+    m_nodes.at(src).explored = false;
+    m_nodes.at(dest).explored = false;
 }
 
 Distance Graph::path_length() const
 {
     return m_path_length;
-}
-
-void Graph::print_nodes() const
-{
-    cout << "Nodes:\n";
-
-    for(const auto & [id, node] : m_nodes)
-    {
-        cout << id
-            << " : prev = " << (node.previous ? to_string(node.previous->id) : "NULL")
-            << ", dist = " << ((node.distance != distance_max) ? to_string(node.distance) : "INF")
-            << endl;
-    }
 }
