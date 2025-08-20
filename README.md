@@ -1,5 +1,3 @@
-# Dijkstra
+# Graph class for games
 
-A graph class providing a Dijkstra implementation that uses a priority queue and runs in time $`{\mathcal{O}(|E| + |V| \log |V|)}`$.
-
-I have been using this as a basis for some Advent of Code puzzles and for some small games.
+A graph class with functionality for pathfinding. Nodes can be temporarily blocked to exclude them from pathfinding. This is convenient when players or other objects are occupying positions on the map. An optimized Dijkstra implementation using a priority queue is used for pathfinding.

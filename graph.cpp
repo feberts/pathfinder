@@ -128,7 +128,7 @@ void Graph::dijkstra(const Node_id src, const Node_id dest)
 
         node->explored = true;
 
-        // consider all neighbours of the current node:
+        // consider all unvisited neighbours of the current node:
         for(const auto & edge : node->departing_edges)
         {
             Node * const neighbour = edge.destination;
